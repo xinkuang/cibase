@@ -19,8 +19,6 @@ ENV TZ="Asia/Shanghai" \
 RUN cp /etc/apk/repositories /etc/apk/repositories.bak && \
     sed -i 's dl-cdn.alpinelinux.org mirrors.aliyun.com g' /etc/apk/repositories
 
-# Add namespace
-#RUN echo "nameserver 172.31.21.22" > /etc/resolv.conf
 
 # Install kaniko sonar-scanner-cli
 COPY --from=kaniko /kaniko/executor /usr/bin/kaniko
@@ -73,4 +71,8 @@ RUN apk --no-cache add \
     rm -r /tmp/* && \
     helm init -c --stable-repo-url=https://mirror.azure.cn/kubernetes/charts/ && \
     helm plugin install --version $HELM_PUSH_VERSION https://github.com/chartmuseum/helm-push && \
-    npm install -g typescript@3.6.3
+    echo "nameserver 172.31.21.22" > /etc/resolv.conf
+    ##npm install -g typescript@3.6.3
+
+    # Add namespace
+    #RUN echo "nameserver 172.31.21.22" > /etc/resolv.conf
