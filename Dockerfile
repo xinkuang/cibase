@@ -20,7 +20,7 @@ RUN cp /etc/apk/repositories /etc/apk/repositories.bak && \
     sed -i 's dl-cdn.alpinelinux.org mirrors.aliyun.com g' /etc/apk/repositories
 
 # Add namespace
-RUN echo "nameserver 172.31.21.22" > /etc/resolv.conf
+#RUN echo "nameserver 172.31.21.22" > /etc/resolv.conf
 
 # Install kaniko sonar-scanner-cli
 COPY --from=kaniko /kaniko/executor /usr/bin/kaniko
