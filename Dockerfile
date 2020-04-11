@@ -1,6 +1,6 @@
-FROM gcr.azk8s.cn/kaniko-project/executor:v0.18.0 AS kaniko
-FROM dockerhub.azk8s.cn/sonarsource/sonar-scanner-cli:4.3 AS sonar-scanner-cli
-FROM dockerhub.azk8s.cn/library/maven:3-jdk-8-alpine
+FROM gcr.io/kaniko-project/executor:v0.18.0 AS kaniko
+FROM sonarsource/sonar-scanner-cli:4.3 AS sonar-scanner-cli
+FROM library/maven:3-jdk-8-alpine
 
 ENV SONAR_SCANNER_HOME="/opt/sonar-scanner" \
     SONAR_SCANNER_VERSION="4.3.0.2102"
@@ -18,6 +18,9 @@ ENV TZ="Asia/Shanghai" \
 # Add mirror source
 RUN cp /etc/apk/repositories /etc/apk/repositories.bak && \
     sed -i 's dl-cdn.alpinelinux.org mirrors.aliyun.com g' /etc/apk/repositories
+
+# Add namespace
+RUN echo "nameserver 172.31.21.22" > /etc/resolv.conf
 
 # Install kaniko sonar-scanner-cli
 COPY --from=kaniko /kaniko/executor /usr/bin/kaniko
