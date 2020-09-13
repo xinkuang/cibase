@@ -70,8 +70,9 @@ RUN apk --no-cache add \
     rm -r /tmp/* && \
     helm  repo add stable https://mirror.azure.cn/kubernetes/charts/ && \
     helm plugin install  https://github.com/chartmuseum/helm-push.git && \
-    echo "nameserver 172.31.21.22" > /etc/resolv.conf && \
-    SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/ npm install node-sass 
+    echo "nameserver 172.31.21.22" > /etc/resolv.conf && \  
+    npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/ && \
+    npm install node-sass --registry=https://registry.npm.taobao.org
     ##npm install -g typescript@3.6.3
 
     # Add namespace
