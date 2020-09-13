@@ -10,7 +10,6 @@ ENV TZ="Asia/Shanghai" \
     IMG_VERSION="v0.5.7" \
     HELM_VERSION="v3.3.1" \
     DOCKER_VERSION="18.06.3" \
-    HELM_PUSH_VERSION="v0.8.1" \
     YQ_SHA256="11a830ffb72aad0eaa7640ef69637068f36469be4f68a93da822fbe454e998f8" \
     DOCKER_SHA256="346f9394393ee8db5f8bd1e229ee9d90e5b36931bdd754308b2ae68884dd6822" \
     PATH="${SONAR_SCANNER_HOME}/bin:${PATH}"
@@ -69,8 +68,8 @@ RUN apk --no-cache add \
     mv /tmp/linux-amd64/helm /usr/bin/helm && \
     # post install
     rm -r /tmp/* && \
-    helm init -c --stable-repo-url=https://mirror.azure.cn/kubernetes/charts/ && \
-    helm plugin install --version $HELM_PUSH_VERSION https://github.com/chartmuseum/helm-push && \
+    helm  repo add stable https://mirror.azure.cn/kubernetes/charts/ && \
+    helm plugin install  https://github.com/chartmuseum/helm-push && \
     echo "nameserver 172.31.21.22" > /etc/resolv.conf
     ##npm install -g typescript@3.6.3
 
