@@ -69,7 +69,7 @@ RUN apk --no-cache add \
     # post install
     rm -r /tmp/* && \
     helm  repo add stable https://mirror.azure.cn/kubernetes/charts/ && \
-    helm plugin install  https://github.com/chartmuseum/helm-push && \
+    helm plugin install  https://github.com/chartmuseum/helm-push.git && \
     echo "nameserver 172.31.21.22" > /etc/resolv.conf
     ##npm install -g typescript@3.6.3
 
