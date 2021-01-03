@@ -26,7 +26,7 @@ COPY --from=sonar-scanner-cli /opt/sonar-scanner/conf /opt/sonar-scanner/conf
 COPY --from=sonar-scanner-cli /opt/sonar-scanner/lib /opt/sonar-scanner/lib
 
 # Install base packages
-RUN apk --no-cache add \
+RUN apk update && apk --no-cache add \
         xz \
         jq \
         git \
