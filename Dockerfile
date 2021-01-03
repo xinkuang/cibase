@@ -46,11 +46,11 @@ RUN  apk --no-cache add \
     echo 'begin install docker...' && \
     # install docker client
     curl -sSL https://get.daocloud.io/docker | sh && \
-    #wget -qO "/tmp/docker-${DOCKER_VERSION}-ce.tgz" \
-    #    "https://mirror.azure.cn/docker-ce/linux/static/stable/x86_64/docker-${DOCKER_VERSION}-ce.tgz" && \
-    #echo "${DOCKER_SHA256}  /tmp/docker-${DOCKER_VERSION}-ce.tgz" | sha256sum -c - && \
-    #tar zxf "/tmp/docker-${DOCKER_VERSION}-ce.tgz" -C /tmp && \
-    #mv /tmp/docker/docker /usr/bin && \
+    wget -qO "/tmp/docker-${DOCKER_VERSION}-ce.tgz" \
+        "https://mirrors.aliyun.com/docker-ce/linux/static/stable/x86_64/docker-${DOCKER_VERSION}-ce.tgz" && \
+    echo "${DOCKER_SHA256}  /tmp/docker-${DOCKER_VERSION}-ce.tgz" | sha256sum -c - && \
+    tar zxf "/tmp/docker-${DOCKER_VERSION}-ce.tgz" -C /tmp && \
+    mv /tmp/docker/docker /usr/bin && \
     # install yq
     #wget -qO /usr/bin/yq \
     #    "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64" && \
