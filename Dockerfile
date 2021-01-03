@@ -33,15 +33,17 @@ RUN apk update && apk --no-cache add \
         npm \
         yarn \
         unzip \
+        wget \
         python \
         py-pip \
         xmlstarlet \
         mysql-client \
         ca-certificates && \
     # install pylint
-    # pip install -U --no-cache-dir pylint && \
+    pip install -U --no-cache-dir pylint && \
     # don't use embedded jre
     sed -i '/use_embedded_jre=true/d' /opt/sonar-scanner/bin/sonar-scanner && \
+    echo 'begin install docker...' && \
     # install docker client
     wget -qO "/tmp/docker-${DOCKER_VERSION}-ce.tgz" \
         "https://mirror.azure.cn/docker-ce/linux/static/stable/x86_64/docker-${DOCKER_VERSION}-ce.tgz" && \
@@ -49,16 +51,16 @@ RUN apk update && apk --no-cache add \
     tar zxf "/tmp/docker-${DOCKER_VERSION}-ce.tgz" -C /tmp && \
     mv /tmp/docker/docker /usr/bin && \
     # install yq
-    #wget -qO /usr/bin/yq \
-    #    "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64" && \
-    #echo "${YQ_SHA256}  /usr/bin/yq" | sha256sum -c - && \
-    #chmod a+x /usr/bin/yq  && \
+    wget -qO /usr/bin/yq \
+        "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64" && \
+    echo "${YQ_SHA256}  /usr/bin/yq" | sha256sum -c - && \
+    chmod a+x /usr/bin/yq  && \
     # install img
-    #IMG_SHA256=`curl -sSL "https://github.com/genuinetools/img/releases/download/${IMG_VERSION}/img-linux-amd64.sha256" | awk '{print $1}'` && \
-    #wget -qO /usr/bin/img \
-    #    "https://github.com/genuinetools/img/releases/download/${IMG_VERSION}/img-linux-amd64" && \
-    #echo "${IMG_SHA256}  /usr/bin/img" | sha256sum -c - && \
-    #chmod a+x /usr/bin/img  && \
+    IMG_SHA256=`curl -sSL "https://github.com/genuinetools/img/releases/download/${IMG_VERSION}/img-linux-amd64.sha256" | awk '{print $1}'` && \
+    wget -qO /usr/bin/img \
+        "https://github.com/genuinetools/img/releases/download/${IMG_VERSION}/img-linux-amd64" && \
+    echo "${IMG_SHA256}  /usr/bin/img" | sha256sum -c - && \
+    chmod a+x /usr/bin/img  && \
     # install helm
     HELM_SHA256=`curl -sSL "https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz.sha256"` && \
     wget -qO "/tmp/helm-${HELM_VERSION}-linux-amd64.tar.gz" \
