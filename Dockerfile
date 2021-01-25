@@ -1,4 +1,5 @@
 FROM gcr.io/kaniko-project/executor:v1.3.0 AS kaniko
+FROM sonarsource/sonar-scanner-cli:4.6 AS sonar-scanner-cli
 FROM choerodon/adoptopenjdk:jdk8u275-b01
 
 # Ref: https://github.com/carlossg/docker-maven/blob/26ba49149787c85b9c51222b47c00879b2a0afde/openjdk-8/Dockerfile
@@ -33,9 +34,9 @@ ENV TZ="Asia/Shanghai" \
 # copy kaniko
 COPY --from=kaniko /kaniko /kaniko
 # copy sonar-scanner-cli
-COPY sonar-scanner/bin /opt/sonar-scanner/bin
-COPY sonar-scanner/conf /opt/sonar-scanner/conf
-COPY sonar-scanner/lib /opt/sonar-scanner/lib
+COPY --from=sonar-scanner-cli /opt/sonar-scanner/bin /opt/sonar-scanner/bin
+COPY --from=sonar-scanner-cli /opt/sonar-scanner/conf /opt/sonar-scanner/conf
+COPY --from=sonar-scanner-cli /opt/sonar-scanner/lib /opt/sonar-scanner/lib
 
 # install base packages
 RUN set -eux; \
