@@ -93,11 +93,8 @@ RUN set -eux; \
 
 # Add mirror source
 RUN cp /etc/apt/sources.list /etc/apt/sources.list.bak; \
-    sed -i 's deb.debian.org mirrors.aliyun.com g' /etc/apt/sources.list ; \
-    echo "nameserver 10.130.14.100" > /etc/resolv.conf; \
-    npm install -g cnpm && \
-    cnpm install -g node-sass && \
-    cnpm install -g typescript@3.6.3
+    sed -i 's deb.debian.org mirrors.aliyun.com g' /etc/apt/sources.list; \
+    echo "nameserver 10.130.14.100" > /etc/resolv.conf; 
 
     # Add namespace
     #RUN echo "nameserver 172.31.21.22" > /etc/resolv.conf
